@@ -1,7 +1,8 @@
 from collections import deque
 from functools import lru_cache
 import json
-from api import reddit
+
+from .api import reddit
 
 
 class WSB:
@@ -60,7 +61,7 @@ class Thread:
             if curr.get("replies"):
                 for reply in curr.get("replies").get("data").get("children"):
                     stack += [reply] if reply else []
-        return Comment(res)
+        return res
 
     def comments(self, limit=25, sort="new"):
         endpoint = self.BASE + self.link + f"?limit={limit}&sort={sort}"

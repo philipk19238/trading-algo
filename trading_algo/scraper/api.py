@@ -1,7 +1,7 @@
 import requests
 from functools import lru_cache
 from datetime import datetime, timedelta
-from config import Config
+from .config import Config
 
 
 class Reddit(Config):

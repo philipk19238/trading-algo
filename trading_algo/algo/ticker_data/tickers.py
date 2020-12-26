@@ -1,5 +1,8 @@
-import os 
-import pandas as pd 
+import pathlib 
+import pandas as pd
+import os
+
+CURRENT_DIRECTORY = pathlib.Path(__file__).parent.absolute()
 
 BLACKLIST = set([
       "YOLO", "TOS", "CEO", "CFO", "CTO", "DD", "BTFD", "WSB", "OK", "RH",
@@ -12,29 +15,27 @@ BLACKLIST = set([
       "OP", "DJIA", "PS", "AH", "TL", "DR", "JAN", "FEB", "JUL", "AUG",
       "SEP", "SEPT", "OCT", "NOV", "DEC", "FDA", "IV", "ER", "IPO", "RISE"
       "IPA", "URL", "MILF", "BUT", "SSN", "FIFA", "USD", "CPU", "AT",
-      "GG", "ELON", "ROPE"
+      "GG", "ELON", "ROPE", "FDS", "ON", "CS", "U", "SJW", "MAGA", "NYC"
    ])
 
 class TickerService:
 
     @staticmethod
     def get_ticker_df():
-        for filename in os.listdir(os.getcwd()):
+        for filename in os.listdir(CURRENT_DIRECTORY):
             if filename.startswith('nasdaq_screener') and filename.endswith('.csv'):
+                filename = f'{CURRENT_DIRECTORY}/{filename}'
                 return pd.read_csv(filename)
 
     @staticmethod 
-    def get_ticker_dict():
-        ticker_dict = {}
+    def get_ticker_set():
+        ticker_set = set()
         ticker_csv = TickerService.get_ticker_df()
-        assert ticker_csv
-        for ticker, name in zip(ticker_csv.Symbol, ticker_csv.Name):
+        for ticker in ticker_csv.Symbol:
             if ticker in BLACKLIST:
                 continue
-            name = name.split()[0]
-            ticker_dict[ticker.lower()] = ticker
-            ticker_dict[name.lower()] = ticker
-        return ticker_dict
+            ticker_set.add(ticker)
+        return ticker_set
         
-tickers = TickerService.get_ticker_dict()
+tickers = TickerService.get_ticker_set()
 
