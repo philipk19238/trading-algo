@@ -1,10 +1,11 @@
 import sys
 sys.path.append('..')
 
-from collections import defaultdict
-from nlp_model import TextPreprocessor, Pipeline 
-from scraper import Comment 
+from scraper import Comment
+from nlp_model import TextPreprocessor, Pipeline
 from ticker_data.tickers import tickers
+from collections import defaultdict
+
 
 
 class AlgoTextPreprocessor(TextPreprocessor):
@@ -45,6 +46,7 @@ class AlgoComment(Comment, AlgoTextPreprocessor):
             return processed_text
         return processed_text
 
+
 class AlgoPipeline(Pipeline):
 
     def __init__(self):
@@ -53,9 +55,9 @@ class AlgoPipeline(Pipeline):
     def process_all(self):
         processed_data = super(AlgoPipeline, self).process_all()
         ticker_dict = defaultdict(list)
-        for elem in processed_data: 
-            for ticker in elem: 
-                if ticker in ticker_dict: 
+        for elem in processed_data:
+            for ticker in elem:
+                if ticker in ticker_dict:
                     ticker_dict[ticker] += elem.get(ticker)
                 else:
                     ticker_dict[ticker] = elem.get(ticker)

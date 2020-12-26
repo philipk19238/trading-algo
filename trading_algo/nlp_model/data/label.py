@@ -24,7 +24,7 @@ if __name__ == "__main__":
     start_idx = LabelService.get_starting()
     labeled = defaultdict(list)
     label_dict = {"y": "Bull", "n": "Bear"}
-    with open("temp.json", "r") as f:
+    with open("daily_data.json", "r") as f:
         f = LabelService.load_json_index(f, start_idx)
         curr = json.loads(f.readline())
         cont = True

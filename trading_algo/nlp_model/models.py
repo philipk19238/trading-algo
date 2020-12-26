@@ -5,6 +5,7 @@ from collections import defaultdict
 
 nlp = en_core_web_sm.load()
 
+
 class TextPreprocessor:
 
     def __init__(self, text):
@@ -24,6 +25,7 @@ class TextPreprocessor:
 
     def _lemmatize(self, doc):
         return ' '.join([t.lemma_ for t in doc])
+
 
 class Pipeline:
 
